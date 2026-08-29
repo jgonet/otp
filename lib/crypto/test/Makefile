@@ -10,7 +10,8 @@ MODULES= \
 	crypto_bench_SUITE \
 	crypto_SUITE \
 	crypto_property_test_SUITE \
-	engine_SUITE
+	engine_SUITE \
+	uuid_SUITE
 
 ERL_FILES= $(MODULES:%=%.erl)
 
@@ -62,4 +63,3 @@ release_tests_spec: opt
 	@tar cf - *_SUITE_data property_test | (cd "$(RELSYSDIR)"; tar xf -)
 
 release_docs_spec:
-

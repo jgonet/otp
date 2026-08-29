@@ -23,10 +23,9 @@
    [{description, "CRYPTO"},
     {vsn, "%VSN%"},
     {modules, [crypto,
-	       crypto_ec_curves]},
+	       crypto_ec_curves,
+	       uuid]},
     {registered, []},
     {applications, [kernel, stdlib]},
     {env, [{fips_mode, false}, {rand_cache_size, 896}]},
-    {runtime_dependencies, ["erts-9.0","stdlib-3.9","kernel-6.0"]}]}.
-
-
+    {runtime_dependencies, ["erts-9.0","stdlib-5.0","kernel-6.0"]}]}.

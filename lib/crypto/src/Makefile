@@ -39,7 +39,8 @@ RELSYSDIR = $(RELEASE_PATH)/lib/crypto-$(VSN)
 
 MODULES= \
 	crypto \
-	crypto_ec_curves
+	crypto_ec_curves \
+	uuid
 
 HRL_FILES=
 ERL_FILES= $(MODULES:%=%.erl)
