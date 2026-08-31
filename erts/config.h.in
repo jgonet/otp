@@ -21,6 +21,9 @@
 /* Define the brk() return type. */
 #undef BRK_RET_TYPE
 
+/* Define if code pointers fit in 32 bits */
+#undef CODE_MODEL_SMALL
+
 /* Define if you need to include rpc/types.h to get INADDR_LOOPBACK defined */
 #undef DEF_INADDR_LOOPBACK_IN_RPC_TYPES_H
 

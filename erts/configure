@@ -682,6 +682,7 @@ DTRACE_ENABLED_2STEP
 DTRACE_ENABLED
 DTRACE_CPP
 DTRACE
+CODE_MODEL
 EMU_CC
 ERTS_BUILD_FALLBACK_POLL
 FLAVORS
@@ -27250,6 +27251,61 @@ else
 	EMU_CC="$ac_cv_prog_emu_cc"
 fi
 
+
+
+
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether the code model is small" >&5
+printf %s "checking whether the code model is small... " >&6; }
+if test "$cross_compiling" = yes
+then :
+  case $erl_xcomp_code_model_small in #(
+  "") :
+    erl_code_model_small=no ;; #(
+  yes|no) :
+    erl_code_model_small=$erl_xcomp_code_model_small ;; #(
+  *) :
+    as_fn_error $? "Bad erl_xcomp_code_model_small value: $erl_xcomp_code_model_small" "$LINENO" 5 ;;
+esac
+else case e in #(
+  e) cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <stdlib.h>
+int
+main (void)
+{
+if ((unsigned long long)&main < (1ull << 32)) {
+                                     exit(0);
+                                 }
+                                 exit(1);
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_run "$LINENO"
+then :
+  erl_code_model_small=yes
+else case e in #(
+  e) erl_code_model_small=no ;;
+esac
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
+esac
+fi
+
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $erl_code_model_small" >&5
+printf "%s\n" "$erl_code_model_small" >&6; }
+case $erl_code_model_small in #(
+  yes) :
+
+printf "%s\n" "#define CODE_MODEL_SMALL 1" >>confdefs.h
+
+         CODE_MODEL=small ;; #(
+  no) :
+    CODE_MODEL=unknown ;; #(
+  *) :
+     ;;
+esac
 
 
 case $DYNAMIC_TRACE_FRAMEWORK in #(

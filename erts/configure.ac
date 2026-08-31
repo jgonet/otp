@@ -3559,6 +3559,32 @@ dnl
 LM_FIND_EMU_CC
 
 dnl
+dnl Test whether code pointers are always short (32 bits).
+dnl
+
+AC_MSG_CHECKING([whether the code model is small])
+AC_RUN_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>]],
+                               [[if ((unsigned long long)&main < (1ull << 32)) {
+                                     exit(0);
+                                 }
+                                 exit(1);]])],
+              [erl_code_model_small=yes],
+              [erl_code_model_small=no],
+              [AS_CASE([$erl_xcomp_code_model_small],
+                       [""], [erl_code_model_small=no],
+                       [yes|no],
+                       [erl_code_model_small=$erl_xcomp_code_model_small],
+                       [AC_MSG_ERROR([Bad erl_xcomp_code_model_small value: $erl_xcomp_code_model_small])])])
+AC_MSG_RESULT([$erl_code_model_small])
+AS_CASE([$erl_code_model_small],
+        [yes],
+        [AC_DEFINE([CODE_MODEL_SMALL], [1],
+                   [Define if code pointers fit in 32 bits])
+         CODE_MODEL=small],
+        [no], [CODE_MODEL=unknown])
+AC_SUBST([CODE_MODEL])
+
+dnl
 dnl DTrace & LTTNG
 dnl
 AS_CASE([$DYNAMIC_TRACE_FRAMEWORK],
